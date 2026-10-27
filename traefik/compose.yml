@@ -1,0 +1,38 @@
+name: swarmax-traefik
+services:
+  traefik:
+    image: traefik:v3.7.16
+    container_name: swarmax-traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      traefik: {}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/traefik/certs
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./dynamic:/etc/traefik/dynamic:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    healthcheck:
+      test: [CMD, traefik, healthcheck]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.routers.swarmax-traefik-dashboard.rule=Host(`traefik.swarmax.xyz`)
+      - traefik.http.routers.swarmax-traefik-dashboard.entrypoints=websecure
+      - traefik.http.routers.swarmax-traefik-dashboard.service=api@internal
+      - traefik.http.routers.swarmax-traefik-dashboard.tls=true
+      - traefik.http.routers.swarmax-traefik-dashboard.tls.certresolver=letsencrypt
+      - traefik.http.middlewares.swarmax-traefik-dashboard-auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH:?Set TRAEFIK_DASHBOARD_AUTH in .env}
+      - traefik.http.routers.swarmax-traefik-dashboard.middlewares=swarmax-traefik-dashboard-auth@docker
+networks:
+  traefik:
+    external: true
+    name: traefik

@@ -1,0 +1,26 @@
+http:
+  routers:
+    www-swarmax-http:
+      entryPoints:
+        - web
+      rule: "Host(`www.swarmax.xyz`)"
+      middlewares:
+        - www-to-apex
+      service: noop@internal
+
+    www-swarmax-https:
+      entryPoints:
+        - websecure
+      rule: "Host(`www.swarmax.xyz`)"
+      middlewares:
+        - www-to-apex
+      service: noop@internal
+      tls:
+        certResolver: letsencrypt
+
+  middlewares:
+    www-to-apex:
+      redirectRegex:
+        regex: "^https?://www\\.swarmax\\.xyz(.*)"
+        replacement: "https://swarmax.xyz${1}"
+        permanent: true

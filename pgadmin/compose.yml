@@ -1,0 +1,43 @@
+name: swarmax-pgadmin
+services:
+  pgadmin:
+    image: dpage/pgadmin4:9.18
+    container_name: swarmax-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:?Set PGADMIN_DEFAULT_EMAIL in .env}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?Set PGADMIN_DEFAULT_PASSWORD in .env}
+      PGADMIN_LISTEN_PORT: 80
+      PGADMIN_CONFIG_SESSION_COOKIE_SECURE: 'True'
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: 'False'
+    networks:
+      swarmax: {}
+      traefik: {}
+    volumes:
+    - data:/var/lib/pgadmin
+    healthcheck:
+      test: [CMD, wget, -qO-, http://127.0.0.1:80/misc/ping]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+    labels:
+    - traefik.enable=true
+    - traefik.docker.network=traefik
+    - traefik.http.routers.swarmax-pgadmin.rule=Host(`pgadmin.swarmax.xyz`)
+    - traefik.http.routers.swarmax-pgadmin.entrypoints=websecure
+    - traefik.http.routers.swarmax-pgadmin.tls=true
+    - traefik.http.routers.swarmax-pgadmin.tls.certresolver=letsencrypt
+    - traefik.http.services.swarmax-pgadmin.loadbalancer.server.port=80
+    - traefik.http.middlewares.swarmax-pgadmin-allow.ipallowlist.sourcerange=${PGADMIN_ALLOWED_CIDRS:-0.0.0.0/0,::/0}
+    - traefik.http.routers.swarmax-pgadmin.middlewares=swarmax-pgadmin-allow@docker
+volumes:
+  data:
+    name: swarmax-pgadmin-data
+networks:
+  traefik:
+    external: true
+    name: traefik
+  swarmax:
+    external: true
+    name: swarmax

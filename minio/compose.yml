@@ -1,0 +1,50 @@
+name: swarmax-minio
+services:
+  minio:
+    image: pgsty/minio:latest
+    container_name: swarmax-minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?Set MINIO_ROOT_USER in .env}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?Set MINIO_ROOT_PASSWORD in .env}
+    command: server /data --console-address ":9001"
+    networks:
+      swarmax: {}
+      traefik: {}
+    volumes:
+      - data:/data
+    healthcheck:
+      test: [CMD, mc, ready, local]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+
+      - traefik.http.routers.swarmax-minio.rule=Host(`minio.swarmax.xyz`)
+      - traefik.http.routers.swarmax-minio.entrypoints=websecure
+      - traefik.http.routers.swarmax-minio.tls=true
+      - traefik.http.routers.swarmax-minio.tls.certresolver=letsencrypt
+      - traefik.http.routers.swarmax-minio.service=swarmax-minio
+      - traefik.http.services.swarmax-minio.loadbalancer.server.port=9000
+
+      - traefik.http.routers.swarmax-minio-console.rule=Host(`minio-console.swarmax.xyz`)
+      - traefik.http.routers.swarmax-minio-console.entrypoints=websecure
+      - traefik.http.routers.swarmax-minio-console.tls=true
+      - traefik.http.routers.swarmax-minio-console.tls.certresolver=letsencrypt
+      - traefik.http.routers.swarmax-minio-console.service=swarmax-minio-console
+      - traefik.http.services.swarmax-minio-console.loadbalancer.server.port=9001
+
+volumes:
+  data:
+    name: swarmax-minio-data
+
+networks:
+  traefik:
+    external: true
+    name: traefik
+  swarmax:
+    external: true
+    name: swarmax

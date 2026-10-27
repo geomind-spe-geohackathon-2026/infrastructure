@@ -1,0 +1,14 @@
+# Local environment files; keep the template in Git.
+.env
+.env.*
+!.env.example
+
+# Local runtime data and credentials.
+certs/
+data/
+log/
+secrets/
+*.key
+*.pem
+*.crt
+*.p12

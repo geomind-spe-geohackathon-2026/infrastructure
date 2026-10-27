@@ -1,0 +1,52 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+  insecure: false
+
+log:
+  level: INFO
+
+accessLog: true
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+
+  websecure:
+    address: ":443"
+    transport:
+      respondingTimeouts:
+        readTimeout: "300s"
+        writeTimeout: "300s"
+        idleTimeout: "300s"
+
+  ping:
+    address: ":8082"
+
+ping:
+  entryPoint: ping
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+    network: traefik
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: sahand.nazarzadeh@gmail.com
+      storage: /etc/traefik/certs/acme.json
+      httpChallenge:
+        entryPoint: web

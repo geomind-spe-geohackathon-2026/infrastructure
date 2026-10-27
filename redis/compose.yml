@@ -1,0 +1,38 @@
+name: swarmax-redis
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: swarmax-redis
+    restart: unless-stopped
+    # Preserve per-service ACLs; refresh only the administrator password.
+    command:
+      - sh
+      - -ec
+      - |
+        digest=$$(printf '%s' "$$REDIS_PASSWORD" | sha256sum | cut -d' ' -f1)
+        touch /data/users.acl
+        { grep -v '^user default ' /data/users.acl || true; } > /data/users.acl.new
+        printf 'user default on #%s ~* &* +@all\n' "$$digest" >> /data/users.acl.new
+        mv /data/users.acl.new /data/users.acl
+        chmod 600 /data/users.acl
+        exec docker-entrypoint.sh redis-server --appendonly yes --aclfile /data/users.acl
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?Set REDIS_PASSWORD in .env}
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    networks:
+      swarmax: {}
+    volumes:
+    - data:/data
+    healthcheck:
+      test: [CMD-SHELL, 'redis-cli ping | grep -qx PONG']
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 5s
+volumes:
+  data:
+    name: swarmax-redis-data
+networks:
+  swarmax:
+    external: true
+    name: swarmax
