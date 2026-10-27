@@ -1,4 +1,5 @@
 name: swarmax-minio
+
 services:
   minio:
     image: pgsty/minio:latest

@@ -1,4 +1,5 @@
 name: swarmax-pgadmin
+
 services:
   pgadmin:
     image: dpage/pgadmin4:9.18
@@ -31,9 +32,11 @@ services:
     - traefik.http.services.swarmax-pgadmin.loadbalancer.server.port=80
     - traefik.http.middlewares.swarmax-pgadmin-allow.ipallowlist.sourcerange=${PGADMIN_ALLOWED_CIDRS:-0.0.0.0/0,::/0}
     - traefik.http.routers.swarmax-pgadmin.middlewares=swarmax-pgadmin-allow@docker
+
 volumes:
   data:
     name: swarmax-pgadmin-data
+
 networks:
   traefik:
     external: true

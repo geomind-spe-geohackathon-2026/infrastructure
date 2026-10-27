@@ -1,4 +1,5 @@
 name: swarmax-traefik
+
 services:
   traefik:
     image: traefik:v3.7.16
@@ -32,6 +33,7 @@ services:
       - traefik.http.routers.swarmax-traefik-dashboard.tls.certresolver=letsencrypt
       - traefik.http.middlewares.swarmax-traefik-dashboard-auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH:?Set TRAEFIK_DASHBOARD_AUTH in .env}
       - traefik.http.routers.swarmax-traefik-dashboard.middlewares=swarmax-traefik-dashboard-auth@docker
+
 networks:
   traefik:
     external: true
