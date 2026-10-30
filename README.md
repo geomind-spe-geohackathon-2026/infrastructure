@@ -1,6 +1,30 @@
 # Swarmax infrastructure
 
-Each directory is an independent Docker Compose project.
+`compose.yml` here is the source of truth for running the whole stack on one machine.
+Each directory is an independent Docker Compose project for the server deployment
+behind Traefik.
+
+## Whole stack
+
+`compose.yml` starts PostgreSQL, Redis, InfluxDB, MinIO, ChromaDB, the API and the
+Celery worker on a private network. It needs no external network and no Traefik, and
+it needs `../backend` and `../gemini` next to this folder. The `api` service runs the
+database migrations before it starts.
+
+```sh
+cp .env.example .env
+docker compose config -q
+docker compose up -d --build
+curl http://localhost:8000/api/v1/system/health
+```
+
+The `frontend` service is behind the `frontend` profile because `../frontend` has no
+Dockerfile yet. Once it has one, start it with `docker compose --profile frontend up -d`.
+Do not point `docker compose up` at it before then: the build fails.
+
+`docker compose down -v` deletes the data of the stack.
+
+## Server deployment
 
 | Service | Container | Address |
 | --- | --- | --- |
