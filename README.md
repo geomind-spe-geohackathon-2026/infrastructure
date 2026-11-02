@@ -53,6 +53,7 @@ Add `https://geomind.team` to `APP_CORS_ORIGINS` in `.env`.
 | [pgAdmin](pgadmin/README.md) | `swarmax-pgadmin` | `https://pgadmin.geomind.team` |
 | [ChromaDB](chromadb/README.md) | `swarmax-chromadb` | `chromadb:8000` |
 | [InfluxDB](influxdb/README.md) | `swarmax-influxdb` | `influxdb:8086` |
+| [Cloudflare Tunnel](cloudflared/README.md) | `swarmax-cloudflared` | outbound only |
 
 Create the external networks once:
 

@@ -1,0 +1,17 @@
+name: swarmax-cloudflared
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:2026.10.7
+    container_name: swarmax-cloudflared
+    restart: unless-stopped
+    command: [tunnel, --no-autoupdate, run]
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?Set TUNNEL_TOKEN in .env}
+    networks:
+      traefik: {}
+
+networks:
+  traefik:
+    external: true
+    name: traefik
