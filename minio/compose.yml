@@ -24,14 +24,14 @@ services:
       - traefik.enable=true
       - traefik.docker.network=traefik
 
-      - traefik.http.routers.swarmax-minio.rule=Host(`minio.swarmax.xyz`)
+      - traefik.http.routers.swarmax-minio.rule=Host(`minio.geomind.team`)
       - traefik.http.routers.swarmax-minio.entrypoints=websecure
       - traefik.http.routers.swarmax-minio.tls=true
       - traefik.http.routers.swarmax-minio.tls.certresolver=letsencrypt
       - traefik.http.routers.swarmax-minio.service=swarmax-minio
       - traefik.http.services.swarmax-minio.loadbalancer.server.port=9000
 
-      - traefik.http.routers.swarmax-minio-console.rule=Host(`minio-console.swarmax.xyz`)
+      - traefik.http.routers.swarmax-minio-console.rule=Host(`minio-console.geomind.team`)
       - traefik.http.routers.swarmax-minio-console.entrypoints=websecure
       - traefik.http.routers.swarmax-minio-console.tls=true
       - traefik.http.routers.swarmax-minio-console.tls.certresolver=letsencrypt

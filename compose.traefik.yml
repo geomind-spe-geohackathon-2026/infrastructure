@@ -1,0 +1,32 @@
+# Public addresses for the whole stack, behind the Traefik in traefik/.
+# Use it on top of compose.yml:
+#   docker compose -f compose.yml -f compose.traefik.yml up -d --build
+# It needs the external `traefik` network and a running Traefik.
+
+services:
+  api:
+    networks: [stack, traefik]
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.routers.geomind-api.rule=Host(`api.geomind.team`)
+      - traefik.http.routers.geomind-api.entrypoints=websecure
+      - traefik.http.routers.geomind-api.tls=true
+      - traefik.http.routers.geomind-api.tls.certresolver=letsencrypt
+      - traefik.http.services.geomind-api.loadbalancer.server.port=80
+
+  frontend:
+    networks: [stack, traefik]
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.routers.geomind-frontend.rule=Host(`geomind.team`)
+      - traefik.http.routers.geomind-frontend.entrypoints=websecure
+      - traefik.http.routers.geomind-frontend.tls=true
+      - traefik.http.routers.geomind-frontend.tls.certresolver=letsencrypt
+      - traefik.http.services.geomind-frontend.loadbalancer.server.port=80
+
+networks:
+  traefik:
+    external: true
+    name: traefik

@@ -1,6 +1,6 @@
 # pgAdmin
 
-PostgreSQL administration UI at `https://pgadmin.swarmax.xyz`.
+PostgreSQL administration UI at `https://pgadmin.geomind.team`.
 
 - Database server: `postgres:5432`
 - Volume: `swarmax-pgadmin-data`

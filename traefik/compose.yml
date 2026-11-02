@@ -26,7 +26,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik
-      - traefik.http.routers.swarmax-traefik-dashboard.rule=Host(`traefik.swarmax.xyz`)
+      - traefik.http.routers.swarmax-traefik-dashboard.rule=Host(`traefik.geomind.team`)
       - traefik.http.routers.swarmax-traefik-dashboard.entrypoints=websecure
       - traefik.http.routers.swarmax-traefik-dashboard.service=api@internal
       - traefik.http.routers.swarmax-traefik-dashboard.tls=true
