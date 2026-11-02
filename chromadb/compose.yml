@@ -10,7 +10,7 @@ services:
     volumes:
       - data:/data
     healthcheck:
-      test: [CMD, curl, -fsS, http://127.0.0.1:8000/api/v2/heartbeat]
+      test: [CMD, bash, -c, 'exec 3<>/dev/tcp/127.0.0.1/8000']
       interval: 10s
       timeout: 5s
       retries: 6
