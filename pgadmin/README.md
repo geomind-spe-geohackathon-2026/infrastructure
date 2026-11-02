@@ -3,7 +3,7 @@
 PostgreSQL administration UI at `https://pgadmin.geomind.team`.
 
 - Database server: `postgres:5432`
-- Volume: `swarmax-pgadmin-data`
+- Volume: `geomind-pgadmin-data`
 - Variables: `PGADMIN_DEFAULT_EMAIL` and `PGADMIN_DEFAULT_PASSWORD`
 - Optional IP restriction: `PGADMIN_ALLOWED_CIDRS`
 

@@ -1,6 +1,6 @@
 # Traefik
 
-Swarmax ingress proxy using Traefik `3.7.16` on ports 80 and 443.
+Geomind ingress proxy using Traefik `3.7.16` on ports 80 and 443.
 
 - Dashboard: `https://traefik.geomind.team/dashboard/`
 - Network: `traefik`

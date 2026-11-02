@@ -1,9 +1,9 @@
 # Redis
 
-Redis 7 with AOF persistence and ACLs on the private `swarmax` network.
+Redis 7 with AOF persistence and ACLs on the private `geomind` network.
 
 - Address: `redis:6379`
-- Volume: `swarmax-redis-data`
+- Volume: `geomind-redis-data`
 - Variable: `REDIS_PASSWORD`
 
 ```sh

@@ -1,9 +1,9 @@
-name: swarmax-pgadmin
+name: geomind-pgadmin
 
 services:
   pgadmin:
     image: dpage/pgadmin4:9.18
-    container_name: swarmax-pgadmin
+    container_name: geomind-pgadmin
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:?Set PGADMIN_DEFAULT_EMAIL in .env}
@@ -12,7 +12,7 @@ services:
       PGADMIN_CONFIG_SESSION_COOKIE_SECURE: 'True'
       PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: 'False'
     networks:
-      swarmax: {}
+      geomind: {}
       traefik: {}
     volumes:
     - data:/var/lib/pgadmin
@@ -25,22 +25,22 @@ services:
     labels:
     - traefik.enable=true
     - traefik.docker.network=traefik
-    - traefik.http.routers.swarmax-pgadmin.rule=Host(`pgadmin.geomind.team`)
-    - traefik.http.routers.swarmax-pgadmin.entrypoints=websecure
-    - traefik.http.routers.swarmax-pgadmin.tls=true
-    - traefik.http.routers.swarmax-pgadmin.tls.certresolver=letsencrypt
-    - traefik.http.services.swarmax-pgadmin.loadbalancer.server.port=80
-    - traefik.http.middlewares.swarmax-pgadmin-allow.ipallowlist.sourcerange=${PGADMIN_ALLOWED_CIDRS:-0.0.0.0/0,::/0}
-    - traefik.http.routers.swarmax-pgadmin.middlewares=swarmax-pgadmin-allow@docker
+    - traefik.http.routers.geomind-pgadmin.rule=Host(`pgadmin.geomind.team`)
+    - traefik.http.routers.geomind-pgadmin.entrypoints=websecure
+    - traefik.http.routers.geomind-pgadmin.tls=true
+    - traefik.http.routers.geomind-pgadmin.tls.certresolver=letsencrypt
+    - traefik.http.services.geomind-pgadmin.loadbalancer.server.port=80
+    - traefik.http.middlewares.geomind-pgadmin-allow.ipallowlist.sourcerange=${PGADMIN_ALLOWED_CIDRS:-0.0.0.0/0,::/0}
+    - traefik.http.routers.geomind-pgadmin.middlewares=geomind-pgadmin-allow@docker
 
 volumes:
   data:
-    name: swarmax-pgadmin-data
+    name: geomind-pgadmin-data
 
 networks:
   traefik:
     external: true
     name: traefik
-  swarmax:
+  geomind:
     external: true
-    name: swarmax
+    name: geomind

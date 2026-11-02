@@ -1,9 +1,9 @@
-name: swarmax-redis
+name: geomind-redis
 
 services:
   redis:
     image: redis:7-alpine
-    container_name: swarmax-redis
+    container_name: geomind-redis
     restart: unless-stopped
     # Preserve per-service ACLs; refresh only the administrator password.
     command:
@@ -21,7 +21,7 @@ services:
       REDIS_PASSWORD: ${REDIS_PASSWORD:?Set REDIS_PASSWORD in .env}
       REDISCLI_AUTH: ${REDIS_PASSWORD}
     networks:
-      swarmax: {}
+      geomind: {}
     volumes:
     - data:/data
     healthcheck:
@@ -33,9 +33,9 @@ services:
 
 volumes:
   data:
-    name: swarmax-redis-data
+    name: geomind-redis-data
 
 networks:
-  swarmax:
+  geomind:
     external: true
-    name: swarmax
+    name: geomind

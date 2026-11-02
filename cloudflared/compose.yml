@@ -1,9 +1,9 @@
-name: swarmax-cloudflared
+name: geomind-cloudflared
 
 services:
   cloudflared:
     image: cloudflare/cloudflared:2026.10.7
-    container_name: swarmax-cloudflared
+    container_name: geomind-cloudflared
     restart: unless-stopped
     command: [tunnel, --no-autoupdate, run]
     environment:

@@ -1,6 +1,6 @@
 http:
   routers:
-    www-swarmax-http:
+    www-geomind-http:
       entryPoints:
         - web
       rule: "Host(`www.geomind.team`)"
@@ -8,7 +8,7 @@ http:
         - www-to-apex
       service: noop@internal
 
-    www-swarmax-https:
+    www-geomind-https:
       entryPoints:
         - websecure
       rule: "Host(`www.geomind.team`)"

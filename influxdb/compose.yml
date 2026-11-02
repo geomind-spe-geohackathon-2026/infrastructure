@@ -1,20 +1,20 @@
-name: swarmax-influxdb
+name: geomind-influxdb
 
 services:
   influxdb:
     image: influxdb:2
-    container_name: swarmax-influxdb
+    container_name: geomind-influxdb
     restart: unless-stopped
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
       DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME:?Set INFLUXDB_USERNAME in .env}
       DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD:?Set INFLUXDB_PASSWORD in .env}
-      DOCKER_INFLUXDB_INIT_ORG: swarmax
-      DOCKER_INFLUXDB_INIT_BUCKET: swarmax
+      DOCKER_INFLUXDB_INIT_ORG: geomind
+      DOCKER_INFLUXDB_INIT_BUCKET: geomind
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN:?Set INFLUXDB_TOKEN in .env}
       DOCKER_INFLUXDB_INIT_RETENTION: '0'
     networks:
-      swarmax: {}
+      geomind: {}
     volumes:
       - data:/var/lib/influxdb2
       - config:/etc/influxdb2
@@ -27,11 +27,11 @@ services:
 
 volumes:
   data:
-    name: swarmax-influxdb-data
+    name: geomind-influxdb-data
   config:
-    name: swarmax-influxdb-config
+    name: geomind-influxdb-config
 
 networks:
-  swarmax:
+  geomind:
     external: true
-    name: swarmax
+    name: geomind

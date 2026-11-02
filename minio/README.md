@@ -5,7 +5,7 @@ S3-compatible object storage.
 - Private API: `http://minio:9000`
 - Public API: `https://minio.geomind.team`
 - Admin console: `https://minio-console.geomind.team`
-- Volume: `swarmax-minio-data`
+- Volume: `geomind-minio-data`
 - Variables: `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD`
 
 ```sh

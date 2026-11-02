@@ -3,8 +3,8 @@
 PostgreSQL 16 using the official Alpine image.
 
 - Address: `postgres:5432`
-- Default database: `swarmax`
-- Volume: `swarmax-postgres-data`
+- Default database: `geomind`
+- Volume: `geomind-postgres-data`
 - Variables: `POSTGRES_USER`, `POSTGRES_PASSWORD`, and `POSTGRES_DB`
 
 ```sh
