@@ -5,6 +5,7 @@ x-backend: &backend
     context: ../backend
     additional_contexts:
       gemini: ../gemini
+      geomind: ../geomind
   image: swarmax-backend:latest
   restart: unless-stopped
   env_file: [.env]
