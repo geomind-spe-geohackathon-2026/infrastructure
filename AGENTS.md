@@ -1,7 +1,7 @@
 # Geomind infrastructure: agent guide
 
 Shared services for geomind.team: the proxy (Traefik), the tunnel (cloudflared) and the data stores
-(Postgres, Redis, MinIO, InfluxDB, ChromaDB, pgAdmin). One folder per service, each with its own
+(Postgres, Redis, MinIO, InfluxDB, ChromaDB, pgAdmin), and SearXNG, the internal web search of the agents' `web_search`. One folder per service, each with its own
 `compose.yml` and `.env` copied from its `.env.example`. The applications deploy from their own
 repos. [README.md](README.md) has the start order, the addresses and the networks.
 
