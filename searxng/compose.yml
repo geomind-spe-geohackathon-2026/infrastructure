@@ -1,0 +1,26 @@
+name: geomind-searxng
+
+# Web search for the geomind agents (web_search). Reachable only on the internal `geomind`
+# network as http://searxng:8080; no published port and no Traefik route, so never public.
+services:
+  searxng:
+    image: searxng/searxng:2026.11.2-cccbc9e15
+    container_name: geomind-searxng
+    restart: unless-stopped
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET:?Set SEARXNG_SECRET in .env}
+      SEARXNG_BASE_URL: http://searxng:8080/
+    volumes:
+      - ./settings.yml:/etc/searxng/settings.yml:ro
+    networks:
+      geomind: {}
+    healthcheck:
+      test: [CMD-SHELL, 'wget -q -O /dev/null http://127.0.0.1:8080/healthz || exit 1']
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+networks:
+  geomind:
+    external: true

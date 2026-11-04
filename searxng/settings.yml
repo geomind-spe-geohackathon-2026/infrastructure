@@ -1,0 +1,17 @@
+# SearXNG for the geomind agents' web_search tool. Internal only: no port, no proxy route.
+use_default_settings: true
+
+general:
+  instance_name: geomind-search
+
+server:
+  # The secret comes from SEARXNG_SECRET in .env (SearXNG reads it from the environment).
+  limiter: false
+  public_instance: false
+  image_proxy: false
+
+search:
+  safe_search: 0
+  formats:
+    - html
+    - json

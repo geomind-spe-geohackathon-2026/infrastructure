@@ -37,6 +37,7 @@ the frontend.
 | [ChromaDB](chromadb/README.md) | `geomind-chromadb` | `chromadb:8000` |
 | [InfluxDB](influxdb/README.md) | `geomind-influxdb` | `influxdb:8086` |
 | [Cloudflare Tunnel](cloudflared/README.md) | `geomind-cloudflared` | outbound only |
+| [SearXNG](searxng/README.md) | `geomind-searxng` | `searxng:8080` (internal only) |
 
 Start a service from its directory:
 
