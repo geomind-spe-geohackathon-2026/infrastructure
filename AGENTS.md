@@ -17,4 +17,5 @@ services).
 - Production runs from the `main` checkout on the NTNU Dell: never change, restart or stop a
   service there, and never run `docker compose down -v`, without Sahand's OK.
 - Never write a secret into a file; `.env` files are not committed.
-- Work on `dev` in a worktree under `.tmp/`; `main` follows with `--ff-only`.
+- One clone, no worktrees. The mode (project root `docs/ops/development-modes.md`) names the
+  branch: hotfix on `main`, the others on `dev`.
