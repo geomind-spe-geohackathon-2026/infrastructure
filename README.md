@@ -38,6 +38,7 @@ the frontend.
 | [InfluxDB](influxdb/README.md) | `geomind-influxdb` | `influxdb:8086` |
 | [Cloudflare Tunnel](cloudflared/README.md) | `geomind-cloudflared` | outbound only |
 | [SearXNG](searxng/README.md) | `geomind-searxng` | `searxng:8080` (internal only) |
+| [Maintenance page](maintenance/README.md) | `geomind-maintenance` | fallback for `geomind.team` and `api.geomind.team` during a deploy |
 
 Start a service from its directory:
 

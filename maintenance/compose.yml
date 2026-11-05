@@ -1,0 +1,28 @@
+name: geomind-maintenance
+
+# The "we are updating" answer during a deploy (QA-060). Its routers have priority 1, so Traefik
+# uses them only while the app's own router is gone (its container is being replaced); the site
+# gets a page that reloads itself, the API a 503 JSON error, both with Retry-After.
+services:
+  maintenance:
+    image: nginx:1.27-alpine
+    container_name: geomind-maintenance
+    restart: unless-stopped
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./maintenance.html:/usr/share/nginx/html/maintenance.html:ro
+    networks:
+      traefik: {}
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.routers.geomind-maintenance.rule=Host(`geomind.team`) || Host(`api.geomind.team`)
+      - traefik.http.routers.geomind-maintenance.priority=1
+      - traefik.http.routers.geomind-maintenance.entrypoints=websecure
+      - traefik.http.routers.geomind-maintenance.tls=true
+      - traefik.http.routers.geomind-maintenance.tls.certresolver=letsencrypt
+      - traefik.http.services.geomind-maintenance.loadbalancer.server.port=80
+
+networks:
+  traefik:
+    external: true
